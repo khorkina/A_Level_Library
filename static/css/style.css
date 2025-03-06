@@ -75,14 +75,32 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--bg-color);
     border-left: 4px solid var(--accent-color);
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     transition: all 0.3s ease;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .pdf-item:hover {
     background: white;
     transform: translateX(5px);
+}
+
+.pdf-item h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.pdf-item p {
+    color: var(--text-color);
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+.pdf-preview {
+    border: 1px solid var(--accent-color);
+    background: white;
+    padding: 5px;
 }
 
 /* Custom Buttons */
@@ -92,6 +110,7 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid var(--accent-color);
     padding: 0.5rem 1.5rem;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .btn-vintage:hover {
