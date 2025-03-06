@@ -13,24 +13,60 @@ SUBJECTS = {
     'business': {
         'name': 'Business A-Level',
         'description': 'Comprehensive business studies materials',
-        'folder': 'Business_Materials'
+        'folder': 'Business_Materials',
+        'categories': ['Unit 1 - Business Environment', 'Unit 2 - People', 'Unit 3 - Marketing',
+                      'Unit 4 - Operations', 'Unit 5 - Finance', 'Unit 6 - Strategic Management',
+                      'Responses', 'Additional Materials']
     },
     'psychology': {
         'name': 'Psychology A-Level',
         'description': 'In-depth psychology resources',
-        'folder': 'Psyhology_Materials'  # Keeping original spelling from zip file
+        'folder': 'Psyhology_Materials',  # Keeping original spelling from zip file
+        'categories': ['Clinical', 'Consumer']
     },
     'sociology': {
         'name': 'Sociology A-Level',
         'description': 'Essential sociology study materials',
-        'folder': 'Sociology_Materials'
+        'folder': 'Sociology_Materials',
+        'categories': ['Education', 'Globalisation', 'Media']
     },
     'english': {
         'name': 'English A-Level',
         'description': 'Literature and language resources',
-        'folder': 'English_Materials'
+        'folder': 'English_Materials',
+        'categories': ['Cheat Sheet', 'Examples', 'Guide']
     }
 }
+
+def detect_category(file_path, subject):
+    path_parts = file_path.split(os.sep)
+
+    # Map folder names to categories
+    category_mapping = {
+        'UNIT (1)': 'Unit 1 - Business Environment',
+        'UNIT (2)': 'Unit 2 - People',
+        'UNIT (3)': 'Unit 3 - Marketing',
+        'UNIT (4)': 'Unit 4 - Operations',
+        'UNIT (5)': 'Unit 5 - Finance',
+        'UNIT (6)': 'Unit 6 - Strategic Management',
+        'Responses': 'Responses',
+        'Clinical': 'Clinical',
+        'Consumer': 'Consumer',
+        'Education': 'Education',
+        'Globalisation': 'Globalisation',
+        'Media': 'Media',
+        'Cheat_Sheet': 'Cheat Sheet',
+        'Examples': 'Examples',
+        'Guide': 'Guide'
+    }
+
+    # Look for category in path
+    for part in path_parts:
+        for folder_name, category in category_mapping.items():
+            if folder_name in part:
+                return category
+
+    return 'Additional Materials'
 
 def get_pdfs_for_subject(subject_folder):
     pdfs = []
@@ -46,11 +82,16 @@ def get_pdfs_for_subject(subject_folder):
                 rel_path = os.path.relpath(os.path.join(root, file), 'vip_folder')
                 # Get a clean name by removing extension and replacing underscores
                 name = os.path.splitext(file)[0].replace('_', ' ')
+
+                # Detect category based on file path
+                category = detect_category(rel_path, subject_folder)
+
                 pdfs.append({
                     'name': name,
-                    'filename': rel_path
+                    'filename': rel_path,
+                    'category': category
                 })
-    return sorted(pdfs, key=lambda x: x['name'])
+    return sorted(pdfs, key=lambda x: (x['category'], x['name']))
 
 @app.route('/')
 def index():
@@ -67,7 +108,8 @@ def subject(subject_name):
     return render_template('subject.html', 
                          subject=subject_info,
                          subject_name=subject_name,
-                         pdfs=pdfs)
+                         pdfs=pdfs,
+                         categories=subject_info['categories'])
 
 @app.route('/download/<path:filename>')
 def download_file(filename):

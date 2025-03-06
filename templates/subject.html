@@ -11,9 +11,25 @@
         </div>
     </div>
 
+    <!-- Category Navigation -->
+    {% if categories %}
+    <div class="row mt-4 mb-4">
+        <div class="col-12">
+            <div class="category-nav">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-vintage active" data-category="all">All Materials</button>
+                    {% for category in categories %}
+                    <button type="button" class="btn btn-vintage" data-category="{{ category|lower }}">{{ category }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="row mt-4">
         {% for pdf in pdfs %}
-        <div class="col-12 mb-4">
+        <div class="col-12 mb-4 pdf-item-container" data-category="{{ pdf.category|lower }}">
             <div class="pdf-item">
                 <div class="row align-items-center">
                     <div class="col-md-2">
@@ -21,7 +37,8 @@
                     </div>
                     <div class="col-md-8">
                         <h4>{{ pdf.name }}</h4>
-                        <p class="mb-0">Click to download or preview the document</p>
+                        <p class="mb-0">{{ pdf.category }}</p>
+                        <p class="text-muted mb-0">Click to download or preview the document</p>
                     </div>
                     <div class="col-md-2 text-md-end mt-3 mt-md-0">
                         <a href="{{ url_for('download_file', filename=pdf.filename) }}" class="btn btn-vintage download-btn">
@@ -34,4 +51,31 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Add category filtering JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryButtons = document.querySelectorAll('.category-nav .btn');
+    const pdfItems = document.querySelectorAll('.pdf-item-container');
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+
+            // Update active button
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            // Show/hide PDF items
+            pdfItems.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
 {% endblock %}
