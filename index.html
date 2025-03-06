@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-overlay">
+        <div class="hero-content">
+            <h1 class="display-4">Welcome to A-Level Library</h1>
+            <p class="lead">Your digital archive of educational resources</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2>Available Subjects</h2>
+            <p>Browse our collection of A-Level study materials</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for subject_id, subject in subjects.items() %}
+        <div class="col-md-6 col-lg-3">
+            <div class="subject-card card h-100 fade-in">
+                <div class="card-body">
+                    <h3 class="card-title">{{ subject.name }}</h3>
+                    <p class="card-text">{{ subject.description }}</p>
+                    <a href="{{ url_for('subject', subject_name=subject_id) }}" class="btn btn-vintage">Browse Resources</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
