@@ -14,10 +14,6 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
-    background-image: url('https://images.unsplash.com/photo-1532153259564-a5f24f261f51');
-    background-attachment: fixed;
-    background-size: cover;
-    background-blend-mode: overlay;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Navigation */
 .navbar {
-    background-color: rgba(139, 69, 19, 0.9) !important;
+    background-color: var(--primary-color) !important;
     border-bottom: 2px solid var(--accent-color);
 }
 
@@ -39,15 +35,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    background-image: url('https://images.unsplash.com/photo-1527530527470-c55f85665e89');
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     height: 60vh;
     position: relative;
 }
 
 .hero-overlay {
-    background: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 0;
     left: 0;
@@ -56,23 +49,21 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .hero-content {
-    color: white;
+    color: var(--bg-color);
     text-align: center;
 }
 
 /* Subject Cards */
 .subject-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    background-image: url('https://images.unsplash.com/photo-1528459010029-4d4cb68b11e3');
-    background-size: cover;
-    background-blend-mode: overlay;
 }
 
 .subject-card:hover {
@@ -81,11 +72,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* PDF List */
 .pdf-item {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg-color);
     border-left: 4px solid var(--accent-color);
     margin-bottom: 1rem;
     padding: 1rem;
     transition: all 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .pdf-item:hover {
@@ -112,7 +104,7 @@ h1, h2, h3, h4, h5, h6 {
     .hero {
         height: 40vh;
     }
-    
+
     .hero h1 {
         font-size: 2rem;
     }

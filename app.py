@@ -12,21 +12,45 @@ app.secret_key = os.environ.get("SESSION_SECRET", "default-secret-key")
 SUBJECTS = {
     'business': {
         'name': 'Business A-Level',
-        'description': 'Comprehensive business studies materials'
+        'description': 'Comprehensive business studies materials',
+        'folder': 'Business_Materials'
     },
     'psychology': {
         'name': 'Psychology A-Level',
-        'description': 'In-depth psychology resources'
+        'description': 'In-depth psychology resources',
+        'folder': 'Psyhology_Materials'  # Keeping original spelling from zip file
     },
     'sociology': {
         'name': 'Sociology A-Level',
-        'description': 'Essential sociology study materials'
+        'description': 'Essential sociology study materials',
+        'folder': 'Sociology_Materials'
     },
     'english': {
         'name': 'English A-Level',
-        'description': 'Literature and language resources'
+        'description': 'Literature and language resources',
+        'folder': 'English_Materials'
     }
 }
+
+def get_pdfs_for_subject(subject_folder):
+    pdfs = []
+    base_path = os.path.join('vip_folder', subject_folder)
+
+    if not os.path.exists(base_path):
+        return pdfs
+
+    for root, dirs, files in os.walk(base_path):
+        for file in files:
+            if file.endswith('.pdf'):
+                # Create relative path from vip_folder
+                rel_path = os.path.relpath(os.path.join(root, file), 'vip_folder')
+                # Get a clean name by removing extension and replacing underscores
+                name = os.path.splitext(file)[0].replace('_', ' ')
+                pdfs.append({
+                    'name': name,
+                    'filename': rel_path
+                })
+    return sorted(pdfs, key=lambda x: x['name'])
 
 @app.route('/')
 def index():
@@ -36,17 +60,12 @@ def index():
 def subject(subject_name):
     if subject_name not in SUBJECTS:
         return "Subject not found", 404
-    
-    # In production, this would scan a real directory
-    # For now, we'll use sample PDF data
-    pdfs = [
-        {'name': f'Chapter 1 - Introduction to {subject_name.title()}', 'filename': 'chapter1.pdf'},
-        {'name': f'Chapter 2 - Advanced {subject_name.title()} Concepts', 'filename': 'chapter2.pdf'},
-        {'name': f'Practice Papers - {subject_name.title()}', 'filename': 'practice.pdf'}
-    ]
-    
+
+    subject_info = SUBJECTS[subject_name]
+    pdfs = get_pdfs_for_subject(subject_info['folder'])
+
     return render_template('subject.html', 
-                         subject=SUBJECTS[subject_name],
+                         subject=subject_info,
                          subject_name=subject_name,
                          pdfs=pdfs)
 
