@@ -1,0 +1,144 @@
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;600&display=swap');
+
+:root {
+    --primary-color: #8B4513;
+    --secondary-color: #D2B48C;
+    --bg-color: #FDF5E6;
+    --text-color: #2C1810;
+    --accent-color: #DAA520;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-color);
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--primary-color) !important;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--bg-color) !important;
+    font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    height: 60vh;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.hero-content {
+    color: #FFFFFF;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content h1 {
+    color: #FFFFFF;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.hero-content p.lead {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Subject Cards */
+.subject-card {
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+}
+
+/* PDF List */
+.pdf-item {
+    background: var(--bg-color);
+    border-left: 4px solid var(--accent-color);
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-item:hover {
+    background: white;
+    transform: translateX(5px);
+}
+
+.pdf-item h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.pdf-item p {
+    color: var(--text-color);
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+.pdf-preview {
+    border: 1px solid var(--accent-color);
+    background: white;
+    padding: 5px;
+}
+
+/* Custom Buttons */
+.btn-vintage {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-vintage:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        height: 40vh;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
